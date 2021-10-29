@@ -1,0 +1,11 @@
+*.o
+*.d
+*.ko
+*.so
+*.a
+*/build/test-*
+*/build/beegfs-*
+tags
+*.pb.h
+*.pb.cc
+*.cmd
