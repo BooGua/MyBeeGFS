@@ -12,6 +12,7 @@
 
 #include <csignal>
 #include <syslog.h>
+#include <iostream>
 
 #define APP_WORKERS_DIRECT_NUM   1
 #define APP_SYSLOG_IDENTIFIER    "beegfs-ctl"
@@ -76,11 +77,12 @@ App::~App()
    closelog();
 }
 
-void App::run()
+void App::run() // from 202110291825
 {
    /* drop effective user and group ID, in case this executable has the setuid/setgid bit set
       (privileges will be re-elevated when necessary, e.g. for authenticat file reading) */
    System::dropUserAndGroupEffectiveID();
+   std::cout << "=============================" << std::endl;
 
    try
    {
@@ -88,7 +90,7 @@ void App::run()
 
       this->cfg = new Config(argc, argv);
 
-      runNormal();
+      runNormal(); // go 202110291831
    }
    catch (InvalidConfigException& e)
    {
@@ -121,13 +123,13 @@ void App::run()
    }
 }
 
-void App::runNormal()
+void App::runNormal() // from 202110291831
 {
    const RunModesElem* runMode;
 
    // init data objects
    initDataObjects();
-
+   std::cout << "initDataObjects() finised. <==============" << std::endl;
    // check if mgmt host is defined if mode is not "help"
    runMode = this->cfg->determineRunMode();
    if (runMode && runMode->needsCommunication && !cfg->getSysMgmtdHost().length())
@@ -146,12 +148,14 @@ void App::runNormal()
       appResult = APPCODE_INITIALIZATION_ERROR;
       return;
    }
-
+   
+   std::cout << " before logInfos() <=================" << std::endl;
 
    // log system and configuration info
 
-   logInfos();
+   logInfos(); // 输出了 Version 等信息。
 
+   std::cout << " after logInfos() <=================" << std::endl;
 
    // detach process
 
@@ -168,16 +172,23 @@ void App::runNormal()
       return;
    }
 
+   std::cout << "before startComponents() <=================" << std::endl;
 
    // start component threads
 
    startComponents();
 
+   std::cout << "after startComponents() <=================" << std::endl;
+
    appResult = executeMode(runMode);
+
+   std::cout << "after executeMode() <=================" << std::endl;
 
    // self-termination
    stopComponents();
 
+   std::cout << "OVER OVER OVER <=================" << std::endl;
+   
    joinComponents();
    log->log(3, "All components stopped. Exiting now!");
 }

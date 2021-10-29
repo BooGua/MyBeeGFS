@@ -11,6 +11,7 @@
 #include <signal.h>
 #include <sched.h>
 #include <sys/prctl.h>
+#include <iostream>
 
 
 #define PTHREAD_KERNELTHREADNAME_DELIMITER_CHAR    '/'
@@ -119,11 +120,12 @@ class PThread
        * creating a new pthread.
        * This is a special case, that makes a standard thread "become" a PThread.
        */
-      void startInCurrentThread()
+      void startInCurrentThread() // from 202110291800
       {
+
          threadID = pthread_self();
 
-         runStatic(this);
+         runStatic(this); // go 202110291820
       }
 
       /**
@@ -273,7 +275,7 @@ class PThread
 
       // inliners
 
-      static void* runStatic(void* args)
+      static void* runStatic(void* args) // from 202110291820
       {
          // args is a pointer to the PThread instance that provides the run() method
          PThread::currentThread = (PThread*) args;
@@ -285,7 +287,7 @@ class PThread
 
          applyPriorityShift(currentThread->priorityShift);
 
-         currentThread->run();
+         currentThread->run(); // beegfs-ctl go 202110291825
 
          return NULL;
       }
