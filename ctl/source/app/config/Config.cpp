@@ -73,6 +73,7 @@ static std::unique_ptr<Mode> instantiateHelpAll()
 
 RunModesElem const __RunModes[] =
 {
+   // modeString, hideen, 回调函数, printHelp 
    {"--help", false, instantiateHelp, nullptr, false},
    SIMPLE_RUN_MODE("--getentryinfo", ModeGetEntryInfo),
    SIMPLE_RUN_MODE("--setpattern", ModeSetPattern),
@@ -129,7 +130,7 @@ Config::Config(int argc, char** argv):
  * Determine RunMode from config.
  * If a valid RunMode exists in the config, the corresponding config element will be erased.
  */
-const RunModesElem* Config::determineRunMode()
+const RunModesElem* Config::determineRunMode() // from 202110301126
 {
    StringMapIter iter;
 

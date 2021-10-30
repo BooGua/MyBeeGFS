@@ -8,7 +8,7 @@
 #include "ICommonConfig.h"
 
 
-
+// from 202110301100
 class AbstractConfig : public ICommonConfig
 {
    public:
@@ -17,7 +17,7 @@ class AbstractConfig : public ICommonConfig
    protected:
       // internals
 
-      StringMap configMap;
+      StringMap configMap; // art TODO 不知道用来保存什么的。
       int argc;
       char** argv;
 
@@ -26,7 +26,7 @@ class AbstractConfig : public ICommonConfig
 
       // configurables
 
-      std::string cfgFile;
+      std::string cfgFile; // art TODO 不知道用来保存什么的。
 
       AbstractConfig(int argc, char** argv);
 

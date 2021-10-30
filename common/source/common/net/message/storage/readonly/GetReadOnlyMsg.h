@@ -6,18 +6,25 @@
 
 // SimpleStringMsg 是所有 Msg 需要继承的，
 // 包含（1）基本信息；（2）操作方法。
-class GetReadOnlyMsg : public SimpleStringMsg{
+class GetReadOnlyMsg : public SimpleStringMsg
+{
    public:
       GetReadOnlyMsg(const std::string& entryID) :
          // NETMSGTYPE_GetRradOnly go to 202110291358
          // SimpleStringMsg go 202110291428。art TODO 这里具体先不管了，以后再看。
-         SimpleStringMsg(NETMSGTYPE_GetRradOnly, entryID.c_str())
-      {}
+         SimpleStringMsg(NETMSGTYPE_GetReadOnly, entryID.c_str()){}
 
       // For deserialization only! 什么时候会用到反序列化？
-      GetReadOnlyMsg() : SimpleStringMsg(NETMSGTYPE_GetRradOnly) {}
-};
+      GetReadOnlyMsg() : SimpleStringMsg(NETMSGTYPE_GetReadOnly) {}
 
-select(FD_CLR);
+   private:
+
+   public:
+      // getters & setters
+      std::string getEntryID()
+      {
+         return std::string(getValue());
+      }
+};
 
 #endif /*GETREADONLYMSG_H_*/

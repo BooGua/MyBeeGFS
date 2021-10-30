@@ -54,10 +54,12 @@ class App : public AbstractApp
 
    private:
       int appResult;
+      // 这两个参数是运行时接收进来的。
       int argc;
       char** argv;
 
-      Config* cfg;
+      // Conifg: argc, argv 保存在这里。
+      Config* cfg; // go 202110301054
       LogContext* log;
 
       NetFilter* netFilter; // empty filter means "all nets allowed"

@@ -128,10 +128,14 @@ void App::runNormal() // from 202110291831
    const RunModesElem* runMode;
 
    // init data objects
-   initDataObjects();
-   std::cout << "initDataObjects() finised. <==============" << std::endl;
+   // beegfs-ctl 接收哪些参数，对应执行哪些操作，要发往哪里，这些都需要初始化。
+   initDataObjects(); // goto 202110301022
+
    // check if mgmt host is defined if mode is not "help"
-   runMode = this->cfg->determineRunMode();
+   // 根据参数类型选定执行哪些操作。
+   // 所以理论上，我可以再这里加一个 --qhj 的参数。
+   // runMode 是一个 RunModesElem* 类型, go 202110301156
+   runMode = this->cfg->determineRunMode(); // go 202110301126
    if (runMode && runMode->needsCommunication && !cfg->getSysMgmtdHost().length())
       throw InvalidConfigException("Management host undefined");
 
@@ -139,7 +143,8 @@ void App::runNormal() // from 202110291831
 
    try
    {
-      initComponents();
+      // 主要是 worker 相关初始化。
+      initComponents(); // go 202110301200
    }
    catch(ComponentInitException& e)
    {
@@ -149,20 +154,16 @@ void App::runNormal() // from 202110291831
       return;
    }
    
-   std::cout << " before logInfos() <=================" << std::endl;
 
    // log system and configuration info
+   logInfos(); // 没看出来这个 log 是怎么回事。
 
-   logInfos(); // 输出了 Version 等信息。
-
-   std::cout << " after logInfos() <=================" << std::endl;
 
    // detach process
-
    try
    {
       if(this->cfg->getRunDaemonized() )
-         daemonize();
+         daemonize(); // 后台化，看着用了一个第三方库。
    }
    catch(InvalidConfigException& e)
    {
@@ -172,17 +173,15 @@ void App::runNormal() // from 202110291831
       return;
    }
 
-   std::cout << "before startComponents() <=================" << std::endl;
-
    // start component threads
-
+   // 在 beegfs 中，一共有几个 threads，分别都是做什么的？
+   // 1. this->dgramListener->start();
+   // 2. workersStart();
+   //       |----> 看一下这个是怎么初始化的，感觉好像没啥，不知道是不是空架子。
    startComponents();
 
-   std::cout << "after startComponents() <=================" << std::endl;
-
-   appResult = executeMode(runMode);
-
-   std::cout << "after executeMode() <=================" << std::endl;
+   // go 202110301246
+   appResult = executeMode(runMode); // 这里是重点，要看不同的消息都做了什么。
 
    // self-termination
    stopComponents();
@@ -197,6 +196,7 @@ int App::executeMode(const RunModesElem* runMode)
 {
    try
    {
+      // GetReadOnly go 202110301248
       if (runMode)
       {
          return runMode->instantiate()->execute();
@@ -220,12 +220,13 @@ int App::executeMode(const RunModesElem* runMode)
    }
 }
 
-void App::initDataObjects()
+void App::initDataObjects() // from 202110301022
 {
    netFilter = new NetFilter(cfg->getConnNetFilterFile() );
    tcpOnlyFilter = new NetFilter(cfg->getConnTcpOnlyFilterFile() );
 
    // mute the standard logger if it has not been explicitly enabled
+   // art TODO beegfs-ctl 也是有日志的吗，为什么没有找到？
    Logger::createLogger(cfg->getLogEnabled() ? cfg->getLogLevel() : 0, cfg->getLogType(),
       cfg->getLogNoDate(), cfg->getLogStdFile(), cfg->getLogNumLines(),
       cfg->getLogNumRotatedFiles());
@@ -234,6 +235,7 @@ void App::initDataObjects()
 
    allowedInterfaces = new StringList();
    std::string interfacesFilename = cfg->getConnInterfacesFile();
+   std::cout << "interfacesFilename: " << interfacesFilename << " <==========" << std::endl;
    if(interfacesFilename.length() )
       Config::loadStringListFile(interfacesFilename.c_str(), *allowedInterfaces);
 
@@ -279,7 +281,7 @@ void App::initLocalNodeInfo()
          localNicList);
 }
 
-void App::initComponents()
+void App::initComponents() // from 202110301200
 {
    log->log(Log_DEBUG, "Initializing components...");
 
@@ -289,7 +291,7 @@ void App::initComponents()
       netFilter, localNicList, ackStore, udpListenPort);
    this->dgramListener->setRecvTimeoutMS(20);
 
-   workersInit();
+   workersInit(); // go 202110301211. art TODO 这个机制还不是很明白，回头看。
 
    log->log(Log_DEBUG, "Components initialized.");
 }
@@ -357,7 +359,7 @@ void App::joinComponents()
    workersJoin();
 }
 
-void App::workersInit()
+void App::workersInit() // from 202110301211
 {
    unsigned numWorkers = cfg->getTuneNumWorkers();
 

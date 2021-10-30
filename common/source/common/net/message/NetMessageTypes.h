@@ -170,6 +170,9 @@
 #define NETMSGTYPE_GetMetaResyncStats              2117
 #define NETMSGTYPE_GetMetaResyncStatsResp          2118
 
+#define NETMSGTYPE_GetReadOnly                     2123
+#define NETMSGTYPE_GetReadOnlyResp                 2124
+
 // session messages
 #define NETMSGTYPE_OpenFile                        3001
 #define NETMSGTYPE_OpenFileResp                    3002

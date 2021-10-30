@@ -11,7 +11,7 @@
 
 #define RUNMODE_HELP_KEY_STRING     "--help" /* key for usage help */
 
-struct RunModesElem
+struct RunModesElem // from 202110301156
 {
    const char* modeString;
    bool hidden;
@@ -24,8 +24,8 @@ struct RunModesElem
 
 extern RunModesElem const __RunModes[];
 
-
-class Config : public AbstractConfig
+// AbstractConfig go 202110301100
+class Config : public AbstractConfig // from 202110301054
 {
    public:
       Config(int argc, char** argv);
