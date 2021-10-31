@@ -129,7 +129,7 @@ bool ModeGetReadOnly::getReadOnly(
 {
    GetReadOnlyMsg msg(entryID);
 
-   // 这里发送了信息，所以这个 MessagingTk，很有可能就是负责 Msg 所有相关动作的。
+   // 发送了信息，所以这个 MessagingTk，很有可能就是负责 Msg 所有相关动作的。
    const auto respMsg = MessagingTk::requestResponse(
          mgmtNode,
          msg,

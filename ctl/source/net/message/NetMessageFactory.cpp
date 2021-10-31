@@ -61,6 +61,7 @@
 #include <common/net/message/storage/StatStoragePathRespMsg.h>
 #include <common/net/message/storage/TruncFileRespMsg.h>
 #include <common/net/message/storage/TruncLocalFileRespMsg.h>
+#include <common/net/message/storage/readonly/GetReadOnlyMsg.h>
 
 // session messages
 #include <common/net/message/session/opening/CloseChunkFileRespMsg.h>
@@ -155,6 +156,8 @@ std::unique_ptr<NetMessage> NetMessageFactory::createFromMsgType(unsigned short 
       case NETMSGTYPE_UnlinkLocalFileResp: { msg = new UnlinkLocalFileRespMsg(); } break;
       case NETMSGTYPE_GetDefaultQuotaResp: { msg = new GetDefaultQuotaRespMsg(); } break;
       case NETMSGTYPE_SetDefaultQuotaResp: { msg = new SetDefaultQuotaRespMsg(); } break;
+
+      case NETMSGTYPE_GetReadOnlyResp: { msg = new GetReadOnlyMsg(); } break;
 
       // session messages
       case NETMSGTYPE_CloseChunkFileResp: { msg = new CloseChunkFileRespMsg(); } break;
