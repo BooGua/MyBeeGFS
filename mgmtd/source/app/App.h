@@ -18,6 +18,7 @@
 #include <components/DatagramListener.h>
 #include <components/HeartbeatManager.h>
 #include <components/InternodeSyncer.h>
+#include <components/ReadonlyManager.h> // 新添加，ReadOnly。
 #include <net/message/NetMessageFactory.h>
 #include <nodes/NodeStoreClientsEx.h>
 #include <nodes/NodeStoreServersEx.h>
@@ -116,6 +117,7 @@ class App : public AbstractApp
       WorkerList workerList;
 
       QuotaManager* quotaManager;
+      ReadonlyManager* readonlyManager; // 新添加，ReadOnly。
 
       void runNormal();
 
@@ -348,6 +350,11 @@ class App : public AbstractApp
       QuotaManager* getQuotaManager()
       {
          return quotaManager;
+      }
+
+      ReadonlyManager* getReadonlyManager() const
+      {
+         return readonlyManager; // 新添加，ReadOnly。
       }
 
       StoragePoolStoreEx* getStoragePoolStore() const

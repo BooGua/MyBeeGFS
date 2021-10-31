@@ -56,6 +56,7 @@ App::App(int argc, char** argv) :
    this->statsCollector = NULL;
    this->internodeSyncer = NULL;
    this->quotaManager = NULL;
+   this->readonlyManager = NULL; // 新添加，ReadOnly。
 }
 
 App::~App()
@@ -91,6 +92,7 @@ App::~App()
    SAFE_DELETE(this->tcpOnlyFilter);
    SAFE_DELETE(this->netFilter);
    SAFE_DELETE(this->quotaManager);
+   SAFE_DELETE(this->readonlyManager); // 新添加，ReadOnly。
 
    SAFE_DELETE(this->cfg);
 
@@ -191,7 +193,7 @@ void App::runNormal()
 
    // start component threads
 
-   startComponents();
+   startComponents(); // go 202110312331
 
    while (shuttingDown.read() == App_RUNNING)
       ::sleep(SHUTDOWN_CHECK_TIMEOUT_SECS);
@@ -278,6 +280,7 @@ void App::initDataObjects(int argc, char** argv)
 
    this->workQueue = new MultiWorkQueue();
    this->ackStore = new AcknowledgmentStore();
+   this->readonlyManager = new ReadonlyManager(); // 新添加，ReadOnly。
 
    initLocalNodeInfo();
    this->mgmtNodes->setLocalNode(this->localNode);
@@ -406,8 +409,13 @@ void App::initStorage(const bool firstRun)
 
    StorageTk::checkOrCreateOrigNodeIDFile(mgmtdPathStr, localNode->getID() );
 
-   // load stored nodes
+   // load readonly entries. 新添加，ReadOnly。
+   // art TODO 这个是什么意思，为什么后来删掉了呢？
+   Path readonlyPath = *mgmtdPath / CONFIG_READONLYENTRIES_FILENAME;
+   readonlyManager->setStoragePath(readonlyPath.str());
+   readonlyManager->loadFromFile();
 
+   // load stored nodes
    metaNodes->setStorePath(CONFIG_METANODES_FILENAME);
    storageNodes->setStorePath(CONFIG_STORAGENODES_FILENAME);
    clientNodes->setStorePath(CONFIG_CLIENTNODES_FILENAME);
@@ -612,7 +620,7 @@ void App::initComponents()
    log->log(Log_DEBUG, "Components initialized.");
 }
 
-void App::startComponents()
+void App::startComponents() // from 202110312331
 {
    log->log(Log_DEBUG, "Starting up components...");
 

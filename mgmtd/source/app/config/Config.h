@@ -17,6 +17,7 @@
 #define CONFIG_METANODESTORESYNC_FILENAME         "nodesToResync"
 #define CONFIG_STORAGETARGETSTATES_FILENAME       "targetStates"
 #define CONFIG_METANODESTATES_FILENAME            "nodeStates"
+#define CONFIG_READONLYENTRIES_FILENAME           "readonlyEntries"
 
 #define MGMT_QUOTA_QUERY_TYPE_FILE_STR        "file"
 #define MGMT_QUOTA_QUERY_TYPE_RANGE_STR       "range"
