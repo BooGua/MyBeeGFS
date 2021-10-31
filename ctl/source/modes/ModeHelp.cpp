@@ -11,6 +11,7 @@ int ModeHelp::execute()
    App* app = Program::getApp();
    Config* cfg = app->getConfig();
 
+   // art TODO printAllModes 是个什么模式？
    if (printAllModes)
    {
       printSpecificHelpHeader();
@@ -35,9 +36,15 @@ int ModeHelp::execute()
       const RunModesElem* runMode = cfg->determineRunMode();
 
       if (!runMode)
+      {
+         // beegfs-ctl 的时候这里被调用。
          printGeneralHelp();
+      }
       else
+      {
+         // beegfs-ctl --Mode --help 被调用。
          printSpecificHelp(*runMode);
+      }
    }
 
    return APPCODE_NO_ERROR;

@@ -82,7 +82,6 @@ void App::run() // from 202110291825
    /* drop effective user and group ID, in case this executable has the setuid/setgid bit set
       (privileges will be re-elevated when necessary, e.g. for authenticat file reading) */
    System::dropUserAndGroupEffectiveID();
-   std::cout << "=============================" << std::endl;
 
    try
    {
@@ -192,7 +191,7 @@ void App::runNormal() // from 202110291831
    log->log(3, "All components stopped. Exiting now!");
 }
 
-int App::executeMode(const RunModesElem* runMode)
+int App::executeMode(const RunModesElem* runMode) // from 202110301246
 {
    try
    {

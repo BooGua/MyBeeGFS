@@ -14,6 +14,9 @@
 
 int ModeGetReadOnly::execute()
 {
+
+   std::cout << "You run getreadonly! <==============" << std::endl;
+
    // art TODO 不懂。
    int retVal = APPCODE_NO_ERROR;
 
