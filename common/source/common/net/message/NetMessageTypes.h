@@ -170,6 +170,8 @@
 #define NETMSGTYPE_GetMetaResyncStats              2117
 #define NETMSGTYPE_GetMetaResyncStatsResp          2118
 
+#define NETMSGTYPE_SetReadOnly                     2121
+#define NETMSGTYPE_SetReadOnlyResp                 2122
 #define NETMSGTYPE_GetReadOnly                     2123
 #define NETMSGTYPE_GetReadOnlyResp                 2124
 

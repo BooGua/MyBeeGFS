@@ -54,7 +54,6 @@ int ModeGetReadOnly::execute()
       return APPCODE_INVALID_CONFIG;
    }
 
-   // 为什么会有从 stdin 读取路径？
    bool readFromStdin = (pathStr == MODEGETREADONLY_ARG_READFROMSTDIN);
    if (readFromStdin)
    { // read first path from stdin

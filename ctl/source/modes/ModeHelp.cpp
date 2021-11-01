@@ -85,6 +85,10 @@ void ModeHelp::printGeneralHelp()
    std::cout << " --getquota              => Show quota information for users or groups." << std::endl;
    std::cout << " --setquota (*)          => Sets the quota limits for users or groups." << std::endl;
    std::cout << std::endl;
+   std::cout << " --setreadonly <================================== " << std::endl;
+   std::cout << " --setreadwrite <================================== " << std::endl;
+   std::cout << " --getreadonly <================================== " << std::endl;
+   std::cout << std::endl;
    std::cout << " --listmirrorgroups      => List mirror buddy groups." << std::endl;
    std::cout << " --addmirrorgroup (*)    => Add a mirror buddy group." << std::endl;
    std::cout << " --startresync (*)       => Start resync of a storage target or metadata node." << std::endl;

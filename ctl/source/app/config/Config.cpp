@@ -35,6 +35,7 @@
 #include <modes/storagepools/ModeModifyStoragePool.h>
 #include <modes/storagepools/ModeRemoveStoragePool.h>
 #include <modes/ModeGetReadOnly.h> // --getreadonly
+#include <modes/ModeSetReadOnly.h> // --setreadonly
 #include <toolkit/IoctlTk.h>
 #include "Config.h"
 
@@ -114,7 +115,10 @@ RunModesElem const __RunModes[] =
    SIMPLE_RUN_MODE("--modifystoragepool", ModeModifyStoragePool),
    SIMPLE_RUN_MODE("--removestoragepool", ModeRemoveStoragePool),
    SIMPLE_RUN_MODE("--setstate", ModeSetState),
+   // GetReadOnly 和 SetReadOnly。
    SIMPLE_RUN_MODE("--getreadonly", ModeGetReadOnly),
+   SIMPLE_RUN_MODE("--setreadonly", ModeSetReadOnly),
+   SIMPLE_RUN_MODE("--setreadwrite", ModeSetReadWrite),
    {"--helpall", true, instantiateHelpAll, nullptr, false},
 
    {nullptr, true, nullptr, nullptr, false}
