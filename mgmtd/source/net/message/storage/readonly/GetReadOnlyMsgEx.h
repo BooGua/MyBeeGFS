@@ -7,6 +7,6 @@ class GetReadOnlyMsgEx : public GetReadOnlyMsg
 {
    public:
       virtual bool processIncoming(ResponseContext& ctx);
-}
+};
 
 #endif /*GETREADONLYMSGEX_H_*/

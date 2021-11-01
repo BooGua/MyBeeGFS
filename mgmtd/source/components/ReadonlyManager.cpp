@@ -118,6 +118,11 @@ err_unlink:
    return retVal;
 }
 
+bool ReadonlyManager::isEntryReadonly(const std::string& entryID)
+{
+   return readonlyEntries.find(entryID) != readonlyEntries.end();
+}
+
 // art TODO: setOrNot 的含义是啥？
 bool ReadonlyManager::updateReadonlyEntries(const std::string& entryID, bool setOrNot)
 {

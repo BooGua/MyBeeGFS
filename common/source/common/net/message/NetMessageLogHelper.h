@@ -176,6 +176,10 @@ inline std::string netMessageTypeToStr(int type)
       case NETMSGTYPE_ResyncRawInodesResp: return "ResyncRawInodesResp (2116)";
       case NETMSGTYPE_GetMetaResyncStats: return "GetMetaResyncStats (2117)";
       case NETMSGTYPE_GetMetaResyncStatsResp: return "GetMetaResyncStatsResp (2118)";
+      // 新添加 GetReadOnly.
+      case NETMSGTYPE_GetReadOnly: return "GetReadOnly(2123)";
+      case NETMSGTYPE_GetReadOnlyResp: return "GetReadOnlyResp(2124)";
+
       case NETMSGTYPE_OpenFile: return "OpenFile (3001)";
       case NETMSGTYPE_OpenFileResp: return "OpenFileResp (3002)";
       case NETMSGTYPE_CloseFile: return "CloseFile (3003)";

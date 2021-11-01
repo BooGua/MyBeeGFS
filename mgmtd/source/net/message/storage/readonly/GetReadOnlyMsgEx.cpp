@@ -32,7 +32,7 @@ bool GetReadOnlyMsgEx::processIncoming(ResponseContext& ctx)
    if (getAll)
    {
       entryIDs = readonlyManager->getReadonlyEntries();
-   } else if (readonlyManager->isEntryReadOnly(entryID))
+   } else if (readonlyManager->isEntryReadonly(entryID))
    {
       entryIDs = entryID;
    }

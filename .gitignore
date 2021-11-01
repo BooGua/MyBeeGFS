@@ -13,4 +13,4 @@ client_module/source/.tmp_versions/
 client_module/source/Module.symvers
 client_module/source/beegfs.mod.c
 client_module/source/modules.order
-
+artist/

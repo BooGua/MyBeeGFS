@@ -18,9 +18,12 @@ class StringTk
       static std::string trim(const std::string s);
       static void explode(const std::string s, char delimiter, StringList* outList);
       static void explode(const std::string s, char delimiter, StringVector* outVec);
+      static void explode(const std::string s, char delimiter, StringSet* outSet);
       static void explodeEx(const std::string s, char delimiter, bool useTrim, StringList* outList);
       static void explodeEx(const std::string s, char delimiter, bool useTrim, StringVector* outVec);
+      static void explodeEx(const std::string s, char delimiter, bool useTrim, StringSet* outSet);
       static std::string implode(char delimiter, StringList& inList, bool useTrim);
+      static std::string implode(char delimiter, StringSet& inSet, bool useTrim);
 
       // transformation
       static int strToInt(const char* s);

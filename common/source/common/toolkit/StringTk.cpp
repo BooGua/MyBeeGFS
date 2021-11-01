@@ -40,6 +40,11 @@ void StringTk::explode(const std::string s, char delimiter, StringVector* outVec
    explodeEx(s, delimiter, false, outVec);
 }
 
+void StringTk::explode(const std::string s, char delimiter, StringSet* outSet)
+{
+   explodeEx(s, delimiter, false, outSet);
+}
+
 /**
  * @param useTrim true to leave out empty elements and trim spaces
  */
@@ -120,6 +125,49 @@ void StringTk::explodeEx(const std::string s, char delimiter, bool useTrim, Stri
    }
 }
 
+// 将形如 "dbd12 kln21 12sd2" 的 string 以 delimiter 分割存入 Set。
+void StringTk::explodeEx(const std::string s, char delimiter, bool useTrim, StringSet* outSet)
+{
+   std::string::size_type lastPos = (s.length() && (s[0] == delimiter)) ? 0: -1;
+
+   for(std::string::size_type currentPos = 1; ; )
+   {
+      currentPos = s.find(delimiter, lastPos+1);
+
+      if(currentPos == std::string::npos)
+      {
+         // add rest
+         std::string newElem = s.substr(lastPos+1);
+
+         if(useTrim)
+         {
+            newElem = trim(newElem);
+         }
+         if(!newElem.empty())
+         {
+            outSet->insert(newElem);
+         }
+
+         return;
+      }
+
+      // add substring to outSet:
+      std::string newElem = s.substr(lastPos+1, currentPos-lastPos-1);
+
+      if (useTrim)
+      {
+         newElem = trim(newElem);
+      }
+
+      if(!newElem.empty())
+      {
+         outSet->insert(newElem);
+      }
+
+      lastPos = currentPos;
+   }
+}
+
 /*
  * creates a delimiter-seperated list from a StringList
  *
@@ -157,6 +205,43 @@ std::string StringTk::implode(char delimiter, StringList& inList, bool useTrim)
    // resize string to strip the trailing delimiter
    if(!outStr.empty() )
       outStr.resize(outStr.length()-1);
+
+   return outStr;
+}
+
+std::string StringTk::implode(char delimiter, StringSet& inSet, bool useTrim)
+{
+   std::string outStr;
+
+   if(inSet.empty())
+   {
+      return outStr;
+   }
+
+   for(StringSetIter iter = inSet.begin(); iter != inSet.end(); iter++)
+   {
+      std::string currentElem;
+
+      if(!useTrim)
+      {
+         currentElem = *iter;
+      } else {
+         currentElem = trim(*iter);
+
+         if (currentElem.empty())
+         {
+            continue;
+         }
+      }
+
+      outStr += currentElem;
+      outStr += delimiter;
+   }
+
+   if(!outStr.empty())
+   {
+      outStr.resize(outStr.length()-1);
+   }
 
    return outStr;
 }
