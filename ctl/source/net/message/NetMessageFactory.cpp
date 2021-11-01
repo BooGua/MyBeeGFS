@@ -63,8 +63,10 @@
 #include <common/net/message/storage/TruncLocalFileRespMsg.h>
 
 // setreadonly & getreadonly
-#include <common/net/message/storage/readonly/SetReadOnlyMsg.h>
-#include <common/net/message/storage/readonly/GetReadOnlyMsg.h>
+// #include <common/net/message/storage/readonly/SetReadOnlyMsg.h>
+#include <common/net/message/storage/readonly/SetReadOnlyRespMsg.h>
+// #include <common/net/message/storage/readonly/GetReadOnlyMsg.h>
+#include <common/net/message/storage/readonly/GetReadOnlyRespMsg.h>
 
 // session messages
 #include <common/net/message/session/opening/CloseChunkFileRespMsg.h>
@@ -160,8 +162,10 @@ std::unique_ptr<NetMessage> NetMessageFactory::createFromMsgType(unsigned short 
       case NETMSGTYPE_GetDefaultQuotaResp: { msg = new GetDefaultQuotaRespMsg(); } break;
       case NETMSGTYPE_SetDefaultQuotaResp: { msg = new SetDefaultQuotaRespMsg(); } break;
 
-      case NETMSGTYPE_GetReadOnlyResp: { msg = new GetReadOnlyMsg(); } break;
-      case NETMSGTYPE_SetReadOnlyResp: { msg = new SetReadOnlyMsg(); } break;
+      // case NETMSGTYPE_GetReadOnly: { msg = new GetReadOnlyMsgEx(); } break;
+      case NETMSGTYPE_GetReadOnlyResp: { msg = new GetReadOnlyRespMsg(); } break;
+      // case NETMSGTYPE_SetReadOnly: { msg = new SetReadOnlyMsgEx(); } break;
+      case NETMSGTYPE_SetReadOnlyResp: { msg = new SetReadOnlyRespMsg(); } break;
 
       // session messages
       case NETMSGTYPE_CloseChunkFileResp: { msg = new CloseChunkFileRespMsg(); } break;

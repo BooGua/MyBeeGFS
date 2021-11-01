@@ -41,6 +41,10 @@
 #include <common/net/message/storage/quota/GetQuotaInfoRespMsg.h>
 #include <common/net/message/storage/quota/SetExceededQuotaRespMsg.h>
 #include <common/net/message/storage/StatStoragePathRespMsg.h>
+
+#include <common/net/message/storage/readonly/SetReadOnlyRespMsg.h>
+#include <common/net/message/storage/readonly/GetReadOnlyRespMsg.h>
+
 #include <net/message/storage/mirroring/SetMetadataMirroringMsgEx.h>
 #include <net/message/storage/quota/GetDefaultQuotaMsgEx.h>
 #include <net/message/storage/quota/SetDefaultQuotaMsgEx.h>
@@ -50,6 +54,8 @@
 #include <net/message/storage/GetHighResStatsMsgEx.h>
 #include <net/message/storage/SetStorageTargetInfoMsgEx.h>
 
+#include <net/message/storage/readonly/GetReadOnlyMsgEx.h>
+#include <net/message/storage/readonly/SetReadOnlyMsgEx.h>
 
 #include <common/net/message/SimpleMsg.h>
 #include "NetMessageFactory.h"
@@ -120,6 +126,12 @@ std::unique_ptr<NetMessage> NetMessageFactory::createFromMsgType(unsigned short 
       case NETMSGTYPE_SetMetadataMirroring: { msg = new SetMetadataMirroringMsgEx(); } break;
       case NETMSGTYPE_SetMetadataMirroringResp: { msg = new SetMetadataMirroringRespMsg(); } break;
 
+      // getreadonly & setreadonly
+      case NETMSGTYPE_GetReadOnly: { msg = new GetReadOnlyMsgEx(); } break;
+      case NETMSGTYPE_GetReadOnlyResp: { msg = new GetReadOnlyRespMsg(); } break;
+      case NETMSGTYPE_SetReadOnly: { msg = new SetReadOnlyMsgEx(); } break;
+      case NETMSGTYPE_SetReadOnlyResp: { msg = new SetReadOnlyRespMsg(); } break;
+      
       default:
       {
          msg = new SimpleMsg(NETMSGTYPE_Invalid);

@@ -13,7 +13,6 @@ class ReadonlyManager
 
       // 读取 readOnly 文件中的 dentryies 保存到 set 中。
       bool loadFromFile();
-
       bool saveToFile();
       bool isEntryReadonly(const std::string& entryID);
       bool updateReadonlyEntries(const std::string& entryID, bool setOrNot);
